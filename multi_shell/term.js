@@ -26,14 +26,14 @@ window.addEventListener('load', function () {
     var commandsRef = database.ref('commands');
     commandsRef.on('value', function(snapshot) {
         var commands = snapshot.val();
-        var list_commands = '<li class="collection-header"><h6>Commands<a class="waves-effect waves-light btn-small right add_element"><i class="material-icons left">add</i></a></h6></li>';
+        var list_commands = '<li class="collection-item"><div>Commands <a href="#!" class="secondary-content add_element"><i class="material-icons left indigo-text">add</i></a></div></li>';
         for(var key in commands){
             list_commands+=`
             <li class="collection-item _command" data-key="${key}">
                 <div>
                     ${key}
-                    <a href="#!" class="secondary-content badge-text"><i class="material-icons badge-text edit">edit</i></a>
-                    <a href="#!" class="secondary-content teal-text"><i class="material-icons teal-text run">send</i></a>
+                    <a href="#!" class="secondary-content"><i class="material-icons indigo-text edit">edit</i></a>
+                    <a href="#!" class="secondary-content"><i class="material-icons indigo-text run">send</i></a>
                 </div>
             </li>`;
         }
@@ -56,13 +56,17 @@ window.addEventListener('load', function () {
     $('#save').click(function (e) {
         e.preventDefault();
         var name = $('#edit_key_name_console').val();
+        var new_name = $('#edit_name_console').val();
         var command = $('#edit_command').val();
         if(name!="" && command!=""){
-            writeCommand(name, command);
+            deleteCommand(name);
             $('#edit_key_name_console').val('');
             $('#edit_name_console').val('');
             $('#edit_command').val('');
+            writeCommand(new_name, command);
             modal_edit.close();
+        }else{
+            alert('can not leave empty fields');
         }
     });
 
@@ -77,8 +81,7 @@ window.addEventListener('load', function () {
                 <li class="tab view-console active menu-console-${key}" data-key="${key}"><a href="#${key}" id="menu-console-${key}">${key}</a></li>
             `);
             $('#terminals').append(`
-                <div id="console-${key}" class="col s12 consoles">
-                    <h6 class="center-align">${key}</h6>
+                <div id="console-${key}" class="col s12 consoles" style="padding: 0;">
                     <div id="terminal-container-${key}"></div>
                 </div>
             `);
@@ -103,7 +106,7 @@ function initShell(id, key){
     commandsRef.once('value').then(function(snapshot){
         var command = snapshot.val().command;
         var terminalContainer = document.getElementById(id);
-        var term = new Terminal({ cursorBlink: true });
+        var term = new Terminal({ cursorBlink: true, lineHeight: 0, rows:30/*, scrollback:500 */});
         term.open(terminalContainer);
         term.fit();
 
@@ -141,4 +144,8 @@ function writeCommand(name, command) {
     database.ref('commands/' + name).set({
         command: command
     });
+}
+
+function deleteCommand(name) {
+    database.ref('commands/' + name).set(null);
 }

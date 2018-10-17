@@ -40,56 +40,30 @@
     <script src="/dist/addons/fit/fit.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="term.js"></script>
-    <script>
-
-    </script>
     <style>
-        body {
-            font-family: helvetica, sans-serif, arial;
-            font-size: 1em;
-            color: #111;
+        body{
+            background: black;
         }
-
-        h1 {
-            text-align: center;
-        }
-
-        #terminal-container {
-            width: 960px;
-            height: 600px;
-            margin: 0 auto;
-            padding: 2px;
-        }
-
-        #terminal-container .terminal {
-            background-color: #111;
-            color: #fafafa;
-            padding: 2px;
-        }
-
-        #terminal-container .terminal:focus .terminal-cursor {
-            background-color: #fafafa;
+        .page_{
+            background: black;
         }
     </style>
 </head>
 
 <body>
-    <br>
-    <div class="row">
+    <nav class="nav-extended indigo darken-4">
+        <div class="nav-content">
+            <ul class="tabs tabs-transparent" id="menu_consoles"></ul>
+        </div>
+    </nav>
+    <div class="row page_">
         <div class="col s3">
             <ul class="collection with-header" id="list_commands"></ul>
         </div>
         <div class="col s9">
-            <h6 class="center-align">Consoles</h6>
-            <nav class="nav-extended teal darken-1">
-                <div class="nav-content">
-                    <ul class="tabs tabs-transparent" id="menu_consoles"></ul>
-                </div>
-            </nav>
             <div id="terminals"></div>
         </div>
     </div>
-    <div id="terminal-container"></div>
 
     <!-- Modal Add -->
     <div id="modal-add" class="modal">
