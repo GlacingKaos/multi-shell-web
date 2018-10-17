@@ -42,6 +42,11 @@ var config = { // Your data firebase connection
 };
 ```
 
+## RUN
+```
+docker-compose up
+```
+
 ##### some help obtained from this post:
 ```
 https://stackoverflow.com/questions/38689707/connecting-to-remote-ssh-server-via-node-js-html5-console

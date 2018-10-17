@@ -3,4 +3,4 @@ services:
   multi_shell:
     build: ./multi_shell
     ports:
-      - "8000:8000"
+      - "8888:8000"

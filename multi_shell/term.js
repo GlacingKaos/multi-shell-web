@@ -7,7 +7,7 @@ window.addEventListener('load', function () {
     var modal_add = M.Modal.getInstance($('#modal-add'));
     var modal_edit = M.Modal.getInstance($('#modal-edit'));
 
-    $(document).on('.add_element', 'click', function (e) {
+    $('#list_commands').on('click', '.add_element', function (e) {
         e.preventDefault();
         modal_add.open();
     });
@@ -112,13 +112,11 @@ function initShell(id, key){
             term.write('\r\n*** Connected to backend***\r\n');
             // Browser -> Backend
             term.on('data', function (data) {
-                console.log("Browser -> Backend", data);
                 socket.emit('data', data);
             });
 
             // Backend -> Browser
             socket.on('data', function (data) {
-                console.log("Backend -> Browser", data);
                 term.write(data);
                 if(data.indexOf("*** SSH CONNECTION CLOSED ***") > -1){
                     term.destroy();
@@ -134,7 +132,6 @@ function initShell(id, key){
         });
 
         setTimeout(function(){
-            console.log('command', command);
             socket.emit('data', command);
         }, 2000);
     });
